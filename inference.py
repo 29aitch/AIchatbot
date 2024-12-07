@@ -24,7 +24,7 @@ def load_model_and_tokenizer(
             config.get('base_model_name_or_path'),
             trust_remote_code=trust_remote_code,
             device_map='auto',
-            torch_dtype=torch.bfloat16
+            torch_dtype=torch.float16
         )
         model = PeftModelForCausalLM.from_pretrained(
             model=model,
@@ -37,10 +37,10 @@ def load_model_and_tokenizer(
             model_dir,
             trust_remote_code=trust_remote_code,
             device_map='auto',
-            torch_dtype=torch.bfloat16
+            torch_dtype=torch.float16
         )
         tokenizer_dir = model_dir
-    model = model.to("cuda")
+    model = model.to("mps")
     tokenizer = AutoTokenizer.from_pretrained(
         tokenizer_dir,
         trust_remote_code=trust_remote_code,
